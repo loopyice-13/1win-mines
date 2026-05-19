@@ -25,10 +25,8 @@ body {
     position: relative;
 }
 
-/* ── CINEMATIC 2D PARALLAX BACKGROUND LAYERS ────────────────────────── */
 .bg-layer {
     position: absolute;
-    /* Scale slightly larger than screen so edges don't crop during tilt transitions */
     top: -10%;
     left: -10%;
     width: 120%;
@@ -37,7 +35,6 @@ body {
     transition: transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Base deep layer (Fallback gradient + custom image background) */
 .deep-bg {
     z-index: -2;
     background: radial-gradient(circle at center, #1c0c3a 0%, var(--bg-dark) 100%), url('background-deep.jpg');
@@ -46,27 +43,15 @@ body {
     opacity: 0.85;
 }
 
-/* Foreground floating overlay layer */
 .grid-overlay {
     z-index: -1;
-    background-image: url('grid-overlay.png');
-    background-size: 40px 40px;
-    opacity: 0.35;
-    mix-blend-mode: screen;
-}
-
-/* If you don't have grid-overlay.png yet, this CSS creates a back-up synthetic matrix grid */
-.grid-overlay::before {
-    content: '';
-    position: absolute;
-    width: 100%; height: 100%;
+    background-size: 35px 35px;
     background-image: 
         linear-gradient(rgba(0, 240, 255, 0.08) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0, 240, 255, 0.08) 1px, transparent 1px);
-    background-size: 35px 35px;
+    opacity: 0.35;
 }
 
-/* ── PHONE CORE CONTAINER ─────────────────────────────────────────── */
 .phone-container {
     width: 100vw;
     height: 100vh;
@@ -79,10 +64,8 @@ body {
     flex-direction: column;
     justify-content: space-between;
     position: relative;
-    border: none;
 }
 
-/* Wrapper presentation boundary on desktop displays */
 @media (min-width: 480px) {
     .phone-container {
         width: 390px;
@@ -90,11 +73,9 @@ body {
         max-height: 800px;
         border-radius: 28px;
         border: 1px solid rgba(0, 240, 255, 0.25);
-        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), inset 0 0 25px rgba(112, 0, 255, 0.15);
     }
 }
 
-/* ── BRANDING & GRAPHICS ─────────────────────────────────────────── */
 .banner-frame {
     position: relative;
     width: 100%;
@@ -103,95 +84,65 @@ body {
     overflow: hidden;
     margin-bottom: 15px;
     border: 1px solid rgba(112, 0, 255, 0.35);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
 }
 
-.banner-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.banner-glare {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
-    z-index: 1;
-}
-
+.banner-img { width: 100%; height: 100%; object-fit: cover; }
 .header { text-align: center; margin-bottom: 15px; }
 .logo {
     font-size: 26px; font-weight: 900; letter-spacing: 1.5px;
     background: linear-gradient(90deg, #ffffff, var(--primary));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    text-shadow: var(--neon-glow);
 }
 .logo span { color: #1a72ff; -webkit-text-fill-color: #1a72ff; }
 .subtitle { font-size: 9px; text-transform: uppercase; letter-spacing: 5px; color: #8c83a8; margin-top: 3px; }
 .instruction-text { color: #a39bb8; font-size: 13px; text-align: center; line-height: 1.5; margin-bottom: 25px; }
 
-/* ── INTERFACES & INPUTS ─────────────────────────────────────────── */
 .screen { display: none; flex-direction: column; justify-content: center; flex-grow: 1; animation: fadeIn 0.4s ease forwards; }
 .screen.active { display: flex; }
 
 .input-group { margin-bottom: 18px; }
 .input-group label { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--primary); margin-bottom: 8px; }
-
 .input-group input, .input-group select {
     width: 100%; padding: 15px; background: rgba(0, 0, 0, 0.65);
     border: 1px solid rgba(112, 0, 255, 0.45); border-radius: 12px;
     color: #ffffff; font-size: 16px; outline: none; text-align: center;
-    transition: border 0.3s, box-shadow 0.3s;
 }
-.input-group input:focus { border-color: var(--primary); box-shadow: 0 0 12px rgba(0, 240, 255, 0.25); }
 
-/* Buttons */
 .btn {
     width: 100%; padding: 16px;
     background: linear-gradient(135deg, var(--secondary) 0%, #4600ab 100%);
-    border: none; border-radius: 12px; color: #ffffff; font-size: 15px; font-weight: bold; letter-spacing: 1px;
-    cursor: pointer; box-shadow: 0 6px 20px rgba(112, 0, 255, 0.35); transition: transform 0.1s;
+    border: none; border-radius: 12px; color: #ffffff; font-size: 15px; font-weight: bold; cursor: pointer;
 }
-.btn:active { transform: scale(0.98); }
-.btn-predict { background: linear-gradient(135deg, #00b0ff 0%, #0022a3 100%); box-shadow: 0 6px 20px rgba(0, 240, 255, 0.25); }
+.btn-predict { background: linear-gradient(135deg, #00b0ff 0%, #0022a3 100%); }
 
-/* ── PREDICTOR 5x5 MATRIX GRID ───────────────────────────────────── */
 .grid-container {
     display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px;
     margin: 15px 0; background: rgba(0, 0, 0, 0.5); padding: 12px; border-radius: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .cell {
     aspect-ratio: 1; background: linear-gradient(135deg, #1f123d 0%, #0e0621 100%);
     border: 1px solid rgba(112, 0, 255, 0.25); border-radius: 9px;
-    display: flex; justify-content: center; align-items: center; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.25);
+    display: flex; justify-content: center; align-items: center; transition: all 0.3s;
 }
 
-/* Star Active State Assets */
 .cell.star {
     background: radial-gradient(circle, #00f0ff 0%, #0b0517 100%);
     border-color: var(--primary); box-shadow: 0 0 15px rgba(0, 240, 255, 0.7);
-    transform: scale(1.03);
 }
-.cell.star::before { content: '⭐'; font-size: 20px; animation: popIn 0.3s ease; }
+.cell.star::before { content: '⭐'; font-size: 20px; }
 
-.status-panel { background: rgba(255, 255, 255, 0.04); border-radius: 10px; padding: 10px; font-size: 11px; text-align: center; color: #a5a0b8; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.02); }
-.status-panel span { color: var(--primary); font-weight: bold; }
+.status-panel { background: rgba(255, 255, 255, 0.04); border-radius: 10px; padding: 10px; font-size: 11px; text-align: center; color: #a5a0b8; margin-bottom: 12px; }
+.status-panel span { color: var(--primary); }
 
-/* ── OVERLAY LOADER TERMINAL ─────────────────────────────────────── */
 .loader {
     display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(5, 2, 10, 0.96); border-radius: 0; z-index: 10;
-    flex-direction: column; justify-content: center; align-items: center;
+    background: rgba(5, 2, 10, 0.96); z-index: 10; flex-direction: column; justify-content: center; align-items: center;
 }
-@media (min-width: 480px) { .loader { border-radius: 28px; } }
 
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes spin { to { transform: rotate(360deg); } }
 .spinner { width: 48px; height: 48px; border: 3px solid rgba(0, 240, 255, 0.1); border-radius: 50%; border-top-color: var(--primary); animation: spin 0.8s linear infinite; }
 .loading-text { margin-top: 18px; font-size: 11px; letter-spacing: 2.5px; color: var(--primary); text-transform: uppercase; }
-
-/* Animations Keyframes */
-@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes popIn { 0% { transform: scale(0); } 100% { transform: scale(1); } }
-@keyframes spin { to { transform: rotate(360deg); } }
-.footer-note { font-size: 9px; color: #534c6e; text-align: center; margin-top: 10px; letter-spacing: 0.5px; }
+.footer-note { font-size: 9px; color: #534c6e; text-align: center; margin-top: 10px; }
+                                           
